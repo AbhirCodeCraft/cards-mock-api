@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   margin: 0;
   padding: 0;
   display: flex;
@@ -53,13 +53,13 @@ body {
   height: 150px;
 }
 
-h4 {
+h2 {
   margin: 0;
   text-align: center;
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .iconWrapper {
@@ -100,9 +100,6 @@ h4 {
   transform: scale(0.9);
   transition: opacity 500ms, transform 500ms;
 }
-
-
-
 
 /* Header CSS */
 .header {

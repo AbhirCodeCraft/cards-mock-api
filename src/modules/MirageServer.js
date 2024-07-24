@@ -6,15 +6,15 @@ export function makeServer() {
       this.namespace = "api";
 
       let items = [
-        { id: 1, name: "Jake Peralta" },
-        { id: 2, name: "Rosa Diaz" },
-        { id: 3, name: "Terry Jeffords" },
-        { id: 4, name: "Amy Santiago" },
-        { id: 5, name: "Charles Boyle" },
-        { id: 6, name: "Gina Linetti" },
-        { id: 7, name: "Raymond Holt" },
-        { id: 8, name: "Michael Hitchcock" },
-        { id: 9, name: "Norm Scully" }
+        { name: "Jake Peralta" },
+        { name: "Rosa Diaz" },
+        { name: "Terry Jeffords" },
+        { name: "Amy Santiago" },
+        { name: "Charles Boyle" },
+        { name: "Gina Linetti" },
+        { name: "Raymond Holt" },
+        { name: "Michael Hitchcock" },
+        { name: "Norm Scully" },
       ];
 
       // Get all items
@@ -31,10 +31,10 @@ export function makeServer() {
       });
 
       // Remove an item
-      this.delete("/items/:id", (schema, request) => {
-        let id = request.params.id;
-        items = items.filter(item => item.id !== parseInt(id));
-        return { id };
+      this.delete("/items/:name", (schema, request) => {
+        let name = request.params.name;
+        items = items.filter((item) => item.name !== parseInt(name));
+        return { name };
       });
     },
   });

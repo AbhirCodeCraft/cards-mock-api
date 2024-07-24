@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { getAllItems, addItem, removeItem } from './modules/ApiHelpers';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { getAllItems, removeItem } from "./modules/ApiHelpers";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import Modal from "./Modal";
+import "./App.css";
 
 function App() {
   const [cards, setCards] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     async function fetchItems() {
@@ -17,35 +19,42 @@ function App() {
     fetchItems();
   }, []);
 
-  const handleAddItem = async () => {
-    const newItem = { name: 'New Item' };
-    const addedItem = await addItem(newItem);
-    setCards([...cards, addedItem]);
+  const handleAddItem = () => {
+    setShowModal(true);
   };
 
-  const handleRemoveItem = async (id) => {
-    await removeItem(id);
-    setCards(cards.filter(item => item.id !== id));
+  const handleRemoveItem = async (name) => {
+    await removeItem(name);
+    setCards(cards.filter((item) => item.name !== name));
+  };
+
+  const handleModalClose = async (newMember) => {
+    if (typeof newMember == "object") {
+      setCards([...cards, newMember]);
+    }
+    setShowModal(false);
   };
 
   return (
-    <div className='pageWrapper'>
+    <div className="pageWrapper">
       <div className="header">
         <h1>99th precinct roster</h1>
         <button onClick={handleAddItem}>Add new</button>
       </div>
-      <div className='listWrapper'>
-        <TransitionGroup className='groupWrapper' >
-          {cards.map(item => (
-            <CSSTransition key={item.id} timeout={500} classNames="card">
+      <div className="listWrapper">
+        <TransitionGroup className="groupWrapper">
+          {cards.map((item) => (
+            <CSSTransition key={item.name} timeout={500} classNames="card">
               <div className="card">
                 <div className="container">
-                  <h2><b>{item.name}</b></h2>
+                  <h2>
+                    <b>{item.name}</b>
+                  </h2>
                   <div className="iconWrapper">
                     <FontAwesomeIcon
                       icon={faTrashAlt}
                       className="deleteIcon"
-                      onClick={() => handleRemoveItem(item.id)}
+                      onClick={() => handleRemoveItem(item.name)}
                     />
                   </div>
                 </div>
@@ -54,6 +63,7 @@ function App() {
           ))}
         </TransitionGroup>
       </div>
+      <Modal isOpen={showModal} onClose={handleModalClose} />
     </div>
   );
 }
