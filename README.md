@@ -39,3 +39,10 @@ To get the project up and running on your local machine, follow these steps:
     ```
 
 The app should now be running at `http://localhost:3000`.
+
+## Output
+List view
+![List](public/list.png)
+
+Modal form to add new member
+![List](public/add.png)
